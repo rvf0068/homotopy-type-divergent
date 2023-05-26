@@ -83,11 +83,11 @@ def main():
         iter_index = -1
         while graph is not None:
             iter_index = iter_index+1
-            if graph.order() < 50:
+            if graph.order() < 40:
                 h_t = homotopy_type(graph)
             else:
                 h_t = betti_numbers(graph)
-            the_file.write(f"|{iter_index}|{graph.order}|{h_t}|\n")
+            the_file.write(f"|{iter_index}|{graph.order()}|{h_t}|\n")
             graph = k(graph, args.bd)
             if graph is not None:
                 graph = p(graph)
