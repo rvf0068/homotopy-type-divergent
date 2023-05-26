@@ -52,14 +52,15 @@ def homotopy_type(graph):
             return (dong1, dong2)
 
 
-def dimension_sc(complex):
-    dims = [len(f) for f in complex.face_set]
+def dimension_sc(s_complex):
+    """Returns the dimension of a simplicial complex"""
+    dims = [len(f) for f in s_complex.face_set]
     dims.sort()
     return dims[-1] - 1
 
 
-# números de betti del complejo de completas de una gráfica
 def betti_numbers(graph):
+    """Computes the betti numbers of the complex of completes of a graph"""
     def simplify_list(bettis):
         simplified = bettis
         while len(simplified) > 0 and simplified[-1] == 0:
@@ -79,13 +80,14 @@ def main():
     results = f"ht_{args.index}.org"
     with open(results, 'a', encoding="utf8") as the_file:
         the_file.write("| index | order | HT |\n")
-        iter = 0
+        iter_index = -1
         while graph is not None:
+            iter_index = iter_index+1
             if graph.order() < 50:
                 h_t = homotopy_type(graph)
             else:
                 h_t = betti_numbers(graph)
-            the_file.write(f"|{iter}|{graph.order}|{h_t}|\n")
+            the_file.write(f"|{iter_index}|{graph.order}|{h_t}|\n")
             graph = k(graph, args.bd)
             if graph is not None:
                 graph = p(graph)
